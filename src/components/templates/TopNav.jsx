@@ -33,7 +33,7 @@ function TopNav() {
           className="text-3xl text-zinc-200 ri-close-fill"
         ></i>
       )}
-      <div className="absolute w-[50%] max-h-[50vh] bg-zinc-200 top-[90%] overflow-auto rounded-lg">
+      <div className="absolute w-[50%] max-h-[50vh] bg-zinc-200 top-[90%] overflow-auto rounded-lg left-[5.8%]">
         {searches.map((s, i) => (
           <Link
             key={i}

@@ -18,16 +18,17 @@ function Home() {
   useEffect(() => {
     !wallpaper && getheaderwallpeper();
   }, []);
-  console.log(wallpaper);
   document.title = "SCSDB | HomePage";
-  return (
+  return wallpaper ? (
     <>
       <SideNav />
       <div className="w-[80%] h-full ">
         <TopNav />
-        <Header />
+        <Header data={wallpaper} />
       </div>
     </>
+  ) : (
+    <h1>Loading....</h1>
   );
 }
 
