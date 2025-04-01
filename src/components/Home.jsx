@@ -4,9 +4,11 @@ import TopNav from "./templates/TopNav";
 import axios from "../utils/axios";
 import Header from "./templates/Header";
 import HorizontalCards from "./templates/HorizontalCards";
+import Dropdown from "./templates/Dropdown";
 function Home() {
   const [wallpaper, setwallpaper] = useState(null);
   const [trending, setTrending] = useState(null);
+  const [category, setCategory] = useState("all");
   const getheaderwallpeper = async () => {
     try {
       const { data } = await axios.get(`/trending/all/day`);
@@ -20,7 +22,7 @@ function Home() {
 
   const getTrending = async () => {
     try {
-      const { data } = await axios.get(`/trending/all/day`);
+      const { data } = await axios.get(`/trending/${category}/day`);
       setTrending(data.results);
     } catch (error) {
       console.error(error);
@@ -28,9 +30,8 @@ function Home() {
   };
   useEffect(() => {
     !wallpaper && getheaderwallpeper();
-    !trending && getTrending();
-  }, []);
-  console.log(trending);
+    getTrending();
+  }, [category]);
   document.title = "SCSDB | HomePage";
   return wallpaper && trending ? (
     <>
@@ -38,6 +39,16 @@ function Home() {
       <div className="w-[80%] h-full overflow-auto overflow-x-hidden">
         <TopNav />
         <Header data={wallpaper} />
+        <div className="mb-5 flex items-center justify-between">
+          <h1 className="text-3xl  text-zinc-400 font-semibold p-5">
+            Trending
+          </h1>
+          <Dropdown
+            title="Filter"
+            options={["tv", "movie", "all"]}
+            func={(e) => setCategory(e.target.value)}
+          />
+        </div>
         <HorizontalCards data={trending} />
       </div>
     </>

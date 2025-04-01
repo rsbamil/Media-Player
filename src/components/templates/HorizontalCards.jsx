@@ -1,21 +1,24 @@
 import React from "react";
+import noImage from "/noImage.png";
+
 function HorizontalCards({ data }) {
   return (
     <div className="w-full  p-5 overflow-y-hidden  ">
-      <div className="mb-5">
-        <h1 className="text-3xl  text-zinc-400 font-semibold">Trending</h1>
-      </div>
       <div className="w-full flex h-[40vh] ">
         {data.map((d, i) => (
           <div
             key={i}
-            className="min-w-[15%] h-full mr-5 bg-zinc-900 rounded-md p-3 flex flex-col justify-end mb-5"
+            className="min-w-[15%] h-full mr-5 bg-zinc-900 rounded-md p-3 flex flex-col justify-evenly mb-5"
           >
             <img
               className="w-full  rounded-md  object-cover mb-2"
-              src={`https://image.tmdb.org/t/p/original/${
+              src={
                 d.backdrop_path || d.poster_path
-              }`}
+                  ? `https://image.tmdb.org/t/p/original/${
+                      d.backdrop_path || d.poster_path
+                    }`
+                  : noImage
+              }
               alt="No Image"
             />
             <div>
