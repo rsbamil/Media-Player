@@ -10,6 +10,7 @@ function Header({ data }) {
         })`,
         backgroundPosition: "center",
         backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
         boxShadow: "0 0 10px rgba(255,255,255,0.5)",
       }}
       className="w-full h-[50vh] flex flex-col justify-end items-start pl-10 pb-5 "
