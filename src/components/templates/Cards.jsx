@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Cards({ data, title }) {
   return (
-    <div className="flex flex-wrap justify-center gap-[5%] w-full pt-10">
+    <div className="flex flex-wrap justify-center gap-[5%] w-full h-full pt-10 px-[3%] py-[1%] bg-[#1F1E24]">
       {data.map((c, i) => (
         <Link className="w-[25vh] mb-10" key={i}>
           <img

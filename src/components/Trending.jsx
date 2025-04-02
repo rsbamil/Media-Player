@@ -5,27 +5,46 @@ import Dropdown from "./templates/Dropdown";
 import axios from "../utils/axios";
 import Cards from "./templates/Cards";
 import Loading from "./Loading";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function Trending() {
   const navigate = useNavigate();
   const [category, setCategory] = useState("all");
   const [duration, setDuration] = useState("day");
   const [trending, setTrending] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const getTrending = async () => {
     try {
-      const { data } = await axios.get(`/trending/${category}/${duration}`);
-      console.log(data.results);
-      setTrending(data.results);
+      const { data } = await axios.get(
+        `/trending/${category}/${duration}?page=${page}`
+      );
+      if (data.results.length > 0) {
+        setTrending((prev) => [...prev, ...data.results]);
+        setPage(page + 1);
+      } else {
+        setHasMore(false);
+      }
     } catch (error) {
       console.error(error);
     }
   };
+  const refreshHandler = () => {
+    if (trending.length === 0) {
+      getTrending();
+    } else {
+      setPage(1);
+      setTrending([]);
+      getTrending();
+    }
+  };
+
   useEffect(() => {
-    getTrending();
+    refreshHandler();
   }, [category, duration]);
-  return trending ? (
-    <div className="px-[3%] py-[1%] w-screen h-screen overflow-hidden overflow-y-auto">
-      <div className="w-full   flex items-center ">
+  return trending.length > 0 ? (
+    <div className=" w-screen h-screen ">
+      <div className="w-full px-[5%]  flex items-center ">
         <h1
           style={{ fontFamily: "open sans" }}
           className="text-2xl text-zinc-400 font-semibold "
@@ -40,16 +59,23 @@ function Trending() {
         <Dropdown
           title="Category"
           options={["movie", "tv", "all"]}
-          funct={(e) => setCategory(e.target.value)}
+          func={(e) => setCategory(e.target.value)}
         />
         <div className="w-[2%]"></div>
         <Dropdown
           title="Duration"
           options={["week", "day"]}
-          funct={(e) => setDuration(e.target.value)}
+          func={(e) => setDuration(e.target.value)}
         />
       </div>
-      <Cards data={trending} title={category} />
+      <InfiniteScroll
+        dataLength={trending.length}
+        loader={<h1>Loading...</h1>}
+        next={getTrending}
+        hasMore={hasMore}
+      >
+        <Cards data={trending} title={category} />
+      </InfiniteScroll>
     </div>
   ) : (
     <Loading />

@@ -21,12 +21,12 @@ function HorizontalCards({ data }) {
               }
               alt="No Image"
             />
-            <div>
+            <div className="overflow-hidden overflow-y-auto">
               <h1 className="text-xl font-semibold mb-5 text-white">
                 {d.name || d.original_title || d.original_name || d.title}
               </h1>
               <p className="text-white  tracking-tight leading-none ">
-                {d.overview.slice(0, 100)} ...
+                {d.overview} ...
                 <span className="text-zinc-500 cursor-pointer">more</span>
               </p>
             </div>
