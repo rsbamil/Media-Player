@@ -6,20 +6,18 @@ import Loading from "./Loading";
 import TopNav from "./templates/TopNav";
 import Dropdown from "./templates/Dropdown";
 import Cards from "./templates/Cards";
-
-function Popular() {
+function People() {
   const navigate = useNavigate();
-  const [category, setCategory] = useState("movie");
-  const [popular, setPopular] = useState([]);
+  const [category, setCategory] = useState("popular");
+  const [people, setPeople] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  const getPopular = async () => {
+  const getPeople = async () => {
     try {
-      const { data } = await axios.get(`${category}/popular?page=${page}`);
-      console.log(data);
+      const { data } = await axios.get(`/person/${category}?page=${page}`);
       if (data.results.length > 0) {
-        setPopular((prev) => [...prev, ...data.results]);
+        setPeople((prev) => [...prev, ...data.results]);
         setPage(page + 1);
       } else {
         setHasMore(false);
@@ -29,20 +27,20 @@ function Popular() {
     }
   };
   const refreshHandler = () => {
-    if (popular.length === 0) {
-      getPopular();
+    if (people.length === 0) {
+      getPeople();
     } else {
       setPage(1);
-      setPopular([]);
-      getPopular();
+      setPeople([]);
+      getPeople();
     }
   };
 
   useEffect(() => {
     refreshHandler();
   }, [category]);
-  document.title = "SCSDB | Popular";
-  return popular.length > 0 ? (
+  document.title = "SCSDB | Tv Shows";
+  return people.length > 0 ? (
     <div className=" w-screen h-screen ">
       <div className="w-full px-[5%]  flex items-center ">
         <h1
@@ -53,23 +51,19 @@ function Popular() {
             onClick={() => navigate(-1)}
             className="hover:text-[#6556CD] ri-arrow-left-line mr-5"
           ></i>
-          Popular
+          Protagonist
         </h1>
         <TopNav />
-        <Dropdown
-          title="Category"
-          options={["movie", "tv"]}
-          func={(e) => setCategory(e.target.value)}
-        />
+
         <div className="w-[2%]"></div>
       </div>
       <InfiniteScroll
-        dataLength={popular.length}
+        dataLength={people.length}
         loader={<h1>Loading...</h1>}
-        next={getPopular}
+        next={getPeople}
         hasMore={hasMore}
       >
-        <Cards data={popular} title={category} />
+        <Cards data={people} title={category} />
       </InfiniteScroll>
     </div>
   ) : (
@@ -77,4 +71,4 @@ function Popular() {
   );
 }
 
-export default Popular;
+export default People;

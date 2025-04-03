@@ -42,6 +42,7 @@ function Trending() {
   useEffect(() => {
     refreshHandler();
   }, [category, duration]);
+  document.title = `SCSDB | Trending `;
   return trending.length > 0 ? (
     <div className=" w-screen h-screen ">
       <div className="w-full px-[5%]  flex items-center ">

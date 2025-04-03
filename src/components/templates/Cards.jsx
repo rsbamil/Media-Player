@@ -5,17 +5,24 @@ function Cards({ data, title }) {
   return (
     <div className="flex flex-wrap justify-center gap-[5%] w-full h-full pt-10 px-[3%] py-[1%] bg-[#1F1E24]">
       {data.map((c, i) => (
-        <Link className="w-[25vh] mb-10" key={i}>
+        <Link className="relative w-[25vh] mb-10" key={i}>
           <img
             className="shadow-[8px_17px_38px_1px_rgba(0,0,0,10)] h-[40vh] object-cover rounded-md hover:scale-120 duration-300"
             src={`https://image.tmdb.org/t/p/original/${
-              c.backdrop_path || c.profile_path
+              c.backdrop_path || c.profile_path || c.poster_path
             })`}
             alt=""
           />
           <h1 className="text-xl text-zinc-300 mt-3 font-semibold">
             {c.name || c.original_title || c.original_name || c.title}
           </h1>
+          {c.vote_average && (
+            <div className="rounded-full text-lg font-semibold bg-yellow-600 text-white w-[5vh] h-[5vh] flex justify-center items-center absolute right-[-10%] bottom-[25%]">
+              <span className="text-xs">
+                {(c.vote_average * 10).toFixed(1)}%{" "}
+              </span>
+            </div>
+          )}
         </Link>
       ))}
     </div>
