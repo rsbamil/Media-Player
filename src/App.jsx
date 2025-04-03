@@ -6,6 +6,8 @@ import Popular from "./components/Popular";
 import Movie from "./components/Movie";
 import TvShows from "./components/TvShows";
 import People from "./components/People";
+import About from "./components/About";
+import Contact from "./components/Contact";
 function App() {
   return (
     <div className="bg-[#1F1E24] max-w-screen h-full flex">
@@ -16,6 +18,8 @@ function App() {
         <Route path="/movie" element={<Movie />} />
         <Route path="/tvshows" element={<TvShows />} />
         <Route path="/person" element={<People />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </div>
   );
