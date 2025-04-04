@@ -68,7 +68,7 @@ function Movie() {
         next={getMovie}
         hasMore={hasMore}
       >
-        <Cards data={movie} title={category} />
+        <Cards data={movie} title="movie" />
       </InfiniteScroll>
     </div>
   ) : (

@@ -3,6 +3,8 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 function About() {
   const Navigate = useNavigate();
+  document.title = "About Us";
+
   return (
     <section className="bg-[#1F1E24] py-12 px-6 text-center w-screen h-screen">
       <div className="max-w-4xl mx-auto flex flex-col gap-7">

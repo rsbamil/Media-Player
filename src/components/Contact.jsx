@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function Contact() {
   const Navigate = useNavigate();
+  document.title = "Contact Us";
   return (
     <section className="bg-[#1F1E24] w-screen h-screen">
       <div className="max-w-3xl mx-auto p-10">

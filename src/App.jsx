@@ -8,6 +8,11 @@ import TvShows from "./components/TvShows";
 import People from "./components/People";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import Moviedetails from "./components/Moviedetails";
+import Tvdetails from "./components/Tvdetails";
+import Persondetails from "./components/Persondetails";
+import Trailer from "./components/templates/Trailer";
+
 function App() {
   return (
     <div className="bg-[#1F1E24] max-w-screen h-full flex">
@@ -16,8 +21,17 @@ function App() {
         <Route path="/trending" element={<Trending />} />
         <Route path="/popular" element={<Popular />} />
         <Route path="/movie" element={<Movie />} />
+        <Route path="/movie/details/:id" element={<Moviedetails />}>
+          <Route
+            path="/movie/details/:id/trailer"
+            element={<Trailer />}
+          ></Route>
+        </Route>
         <Route path="/tvshows" element={<TvShows />} />
+        <Route path="/tv/details/:id" element={<Tvdetails />} />
         <Route path="/person" element={<People />} />
+        <Route path="/person/details/:id" element={<Persondetails />} />
+
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
