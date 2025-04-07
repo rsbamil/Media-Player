@@ -85,7 +85,7 @@ const Moviedetails = () => {
           </ul>
         </div>
         <h1 className="text-xl mb-3">Available On</h1>
-        <div className="flex rounded-full bg-zinc-600 gap-5 w-fit px-4 py-2 ">
+        <div className="scroller flex rounded-full bg-zinc-600 gap-5 w-fit px-4 py-2  overflow-x-auto">
           {(info.watchproviders &&
             info.watchproviders.buy &&
             info.watchproviders.flatrate.map((w, i) => (
