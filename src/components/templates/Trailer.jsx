@@ -17,6 +17,7 @@ const Trailer = () => {
       ></Link>
       {ytvideo ? (
         <ReactPlayer
+          controls
           height={620}
           width={1280}
           style={{ boxShadow: "0 0 20px rgba(125, 254, 227,0.8" }}

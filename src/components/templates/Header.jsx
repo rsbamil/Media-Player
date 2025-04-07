@@ -33,7 +33,10 @@ function Header({ data }) {
         <i className="ml-5 text-yellow-500 ri-movie-2-fill"></i>
         {data.media_type.toUpperCase()}
       </p>
-      <Link className="bg-[#6556CD] w-fit rounded-md px-3 py-1 text-white hover:scale-120  duration-300">
+      <Link
+        to={`/${data.media_type}/details/${data.id}/trailer`}
+        className="bg-[#6556CD] w-fit rounded-md px-3 py-1 text-white hover:scale-120  duration-300"
+      >
         Watch Trailer
       </Link>
     </div>
