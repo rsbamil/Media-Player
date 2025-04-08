@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { asyncloadperson, removeperson } from "../store/actions/PersonActions";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Link,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
 import HorizontalCards from "./templates/HorizontalCards";
+import Dropdown from "./templates/Dropdown";
 
 const PersonDetails = () => {
   const { pathname } = useLocation();
@@ -18,6 +13,7 @@ const PersonDetails = () => {
   const { info } = useSelector((state) => state.person);
   console.log(info);
   const dispatch = useDispatch();
+  const [category, setCategory] = useState("movie");
   useEffect(() => {
     dispatch(asyncloadperson(id));
     return () => {
@@ -26,14 +22,14 @@ const PersonDetails = () => {
   }, [id]);
   document.title = "Details";
   return info ? (
-    <div className="px-[15%] w-screen bg-[#1F1E24] pb-10  ">
+    <div className="px-[10%] w-screen bg-[#1F1E24] pb-10 overflow-x-hidden ">
       <nav className="w-full h-[10vh] text-zinc-200 flex items-center gap-10 text-xl pt-6 pb-5">
         <Link
           onClick={() => Navigate(-1)}
           className="hover:text-[#6556CD] ri-arrow-left-line mr-5 "
         ></Link>
       </nav>
-      <div className="w-full flex gap-30">
+      <div className="w-full flex gap-10">
         {/* part 2 left poster and details */}
         <div className="w-[20%] ">
           <img
@@ -55,19 +51,19 @@ const PersonDetails = () => {
               target="_blank"
               href={`https://www.facebook.com/${info.externalid.facebook_id}`}
             >
-              <i class="ri-facebook-circle-fill hover:text-[#6556CD]  duration-300"></i>
+              <i className="ri-facebook-circle-fill hover:text-[#6556CD]  duration-300"></i>
             </a>
             <a
               target="_blank"
               href={`https://www.instagram.com/${info.externalid.instagram_id}`}
             >
-              <i class="ri-instagram-line hover:text-[#6556CD]  duration-300"></i>
+              <i className="ri-instagram-line hover:text-[#6556CD]  duration-300"></i>
             </a>
             <a
               target="_blank"
               href={`https://x.com/${info.externalid.twitter_id}`}
             >
-              <i class="ri-twitter-x-line hover:text-[#6556CD]  duration-300"></i>
+              <i className="ri-twitter-x-line hover:text-[#6556CD]  duration-300"></i>
             </a>
           </div>
           <h1 className="text-2xl text-zinc-400 font-semibold my-5">
@@ -101,14 +97,41 @@ const PersonDetails = () => {
           </h1>
         </div>
         {/* part 3  right details and info*/}
-        <div className="w-[80%]  bg-red-400">
-          <h1 className="text-2xl text-zinc-400 font-semibold my-5">
-            Personal Info
+        <div className="w-[80%] ">
+          <h1 className="text-2xl text-zinc-400 font-semibold my-5 font-black">
+            {info.detail.name}
           </h1>
+          <h1 className="text-xl text-zinc-400 font-semibold ">Biography</h1>
+          <p className="text-zinc-400 my-3">{info.detail.biography}</p>
+
           <h1 className="text-xl text-zinc-400 font-semibold ">Known For</h1>
-          <h1 className="text-lg text-zinc-400 font-semibold">
-            {info.detail.known_for_department}
-          </h1>
+          <HorizontalCards data={info.combinedcredits.cast} />
+
+          <div className="w-full flex justify-between mt-5">
+            <h1 className="text-xl text-zinc-400 font-semibold ">Acting</h1>
+            <Dropdown
+              title="Category"
+              options={["tv", "movie"]}
+              func={(e) => setCategory(e.target.value)}
+            />
+          </div>
+          <div className="list-disc w-full h-[50vh] overflow-x-hidden overflow-y-auto shadow-xl shadow-[rgba(255,255,255,0.3)] border-zinc-700 border-2 p-5">
+            {info[category + "credits"].cast.map((c, i) => (
+              <li
+                key={i}
+                className="hover:text-white duration-300 cursor-pointer"
+              >
+                <Link to={`/${category}/details/${c.id}`}>
+                  <span>
+                    {c.name || c.title || c.original_title || c.original_name}
+                  </span>
+                  <span className="block ml-6 my-1">
+                    {c.character && `Character Name : ${c.character}`}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </div>
         </div>
       </div>
     </div>
